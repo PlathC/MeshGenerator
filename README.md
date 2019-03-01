@@ -7,9 +7,9 @@ Scripts are designed to be added to the camera and the user will be able to modi
 
 Game mode result : 
 
-![Torus GameMode](/images/torus/GameMode-Torus.png=94.5x67.3)
+![Torus GameMode](/images/torus/GameMode-Torus.png)
 
 Editor result and available values : 
 
-![Torus EditorMode](/images/torus/Editor-Torus.png=94.5x67.3)![Values](/images/torus/ValuesEditor-Torus.png=54.3x19.9)
+![Torus EditorMode](/images/torus/Editor-Torus.png)![Values](/images/torus/ValuesEditor-Torus.png)
 

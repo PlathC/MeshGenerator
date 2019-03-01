@@ -1,7 +1,8 @@
 # MeshGenerator
-Unity project to create dynamic mesh for learning purpose.
+Unity project to create dynamic mesh for learning purpose. 
 
-Scripts are designed to be added to the camera and the user will be able to modify generator's values inside the editor in runtime or in edit mode.
+Scripts are designed to be added to the camera and the user will be able 
+to modify generator's values inside the editor in runtime or in edit mode. 
 
 ## Torus generator 
 

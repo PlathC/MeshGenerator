@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Torus : MonoBehaviour
-{
+public class Torus : MonoBehaviour, IDynamicMesh {
 
     // For help :https://gamedev.stackexchange.com/questions/16845/how-do-i-generate-a-torus-mesh
 
-    public float diametre = 14f;
-    public float secondDiametre = 5.5f;
+    public float firstCircleDiameter = 14f;
+    public float secondCircleDiameter = 5.5f;
     public int nbPointsPerCircle = 80;
     public Vector3 center = new Vector3(0, 0, 50);
     public Material meshMaterial = null;
@@ -23,7 +22,13 @@ public class Torus : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        GenerateMesh();
+        PrintMesh();
+    }
+
+    public void OnValidate()
+    {
+        // Generate the mesh for each change of the Editor
+        PrintMesh();
     }
 
     /// <summary>
@@ -50,15 +55,11 @@ public class Torus : MonoBehaviour
             pointsDictionnary[u] = new Dictionary<float, int>();
         pointsDictionnary[u][v] = pointsIncrements++;
 
-        Vector3 res = center + (diametre * GetW(u)) + (secondDiametre * Mathf.Cos(v) * GetW(u)) + new Vector3(0, 0, secondDiametre * Mathf.Sin(v));
+        Vector3 res = center + (firstCircleDiameter * GetW(u)) + (secondCircleDiameter * Mathf.Cos(v) * GetW(u)) + new Vector3(0, 0, secondCircleDiameter * Mathf.Sin(v));
         return res;
     }
 
-    /// <summary>
-    /// Generate a mesh according to 
-    /// the class parameters.
-    /// </summary>
-    private void GenerateMesh()
+    public Mesh GenerateMesh()
     {
         Mesh finalMesh = new Mesh();
         us.Clear();
@@ -182,6 +183,18 @@ public class Torus : MonoBehaviour
         finalMesh.triangles = triangles.ToArray();
         finalMesh.RecalculateBounds();
         finalMesh.RecalculateNormals();
+        return finalMesh;
+    }
+
+    /// <summary>
+    /// Allow to separate the creation of the mesh and its assignation
+    /// to the object.
+    /// </summary>
+    public void PrintMesh()
+    {
+
+        Mesh finalMesh = GenerateMesh();
+
         if (this.gameObject.GetComponent<MeshRenderer>() == null)
             this.gameObject.AddComponent<MeshRenderer>();
         this.gameObject.GetComponent<MeshRenderer>().enabled = true;
@@ -199,17 +212,5 @@ public class Torus : MonoBehaviour
         if (this.gameObject.GetComponent<MeshFilter>() == null)
             this.gameObject.AddComponent<MeshFilter>();
         this.gameObject.GetComponent<MeshFilter>().mesh = finalMesh;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
-    public void OnValidate()
-    {
-        // Generate the mesh for each change of the Editor
-        GenerateMesh();
     }
 }
